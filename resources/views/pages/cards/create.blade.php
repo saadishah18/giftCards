@@ -9,12 +9,13 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Create Card</h4>
-                    <form class="forms-sample">
+                    <form class="forms-sample" method="post" action="{{route('cards.store')}}">
+                        @csrf
                         <div class="row">
                             <div class="col-9">
                                 <div class="form-group">
                                     <label for="exampleInputName1">Card Title</label>
-                                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                                    <input type="text" name="title" class="form-control" id="exampleInputName1" placeholder="Name">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -22,7 +23,7 @@
                                     <br><br>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input"> Display on Card </label>
+                                            <input type="checkbox" name="display_title" class="form-check-input"> Display on Card </label>
                                     </div>
                                 </div>
                             </div>
@@ -32,7 +33,7 @@
                             <div class="col-9">
                                 <div class="form-group">
                                     <label for="exampleInputEmail3">Business Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                    <input type="text" name="business_name" readonly value="{{auth()->user()->business_name}}" class="form-control" id="exampleInputEmail3" placeholder="Email">
                                 </div>
                             </div>
                             <br>
@@ -41,7 +42,7 @@
                                     <br><br>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input"> Display on Card </label>
+                                            <input type="checkbox" name="display_business" class="form-check-input"> Display on Card </label>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +51,7 @@
                             <div class="col-9">
                                 <div class="form-group">
                                     <label for="exampleInputPassword4">Price</label>
-                                    <input type="number" min="0" class="form-control" id="exampleInputPassword4"
+                                    <input type="number" name="price" min="0" class="form-control" id="exampleInputPassword4"
                                            placeholder="Password">
                                 </div>
                             </div>
@@ -60,7 +61,7 @@
                                     <br><br>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input"> Display on Card </label>
+                                            <input type="checkbox" name="display_price" class="form-check-input"> Display on Card </label>
                                     </div>
                                 </div>
                             </div>
@@ -69,8 +70,8 @@
                             <label for="exampleInputPassword4">Choose Card</label>
                             <div class="col-md-4 stretch-card grid-margin">
                                 <div class="col-1">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"
-                                           id="optionsRadios1" value="">
+                                    <input type="radio" class="form-check-input" name="card_format_type"
+                                           id="optionsRadios1" value="1">
                                 </div>
                                 <br>
                                 <br>
@@ -98,8 +99,8 @@
                             </div>
                             <div class="col-md-4 stretch-card grid-margin">
                                 <div class="col-1">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"
-                                           id="optionsRadios1" value="">
+                                    <input type="radio" class="form-check-input" name="card_format_type"
+                                           id="optionsRadios1" value="2">
                                 </div>
                                 <br>
                                 <br>
@@ -127,8 +128,8 @@
                             </div>
                             <div class="col-md-4 stretch-card grid-margin">
                                 <div class="col-1">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"
-                                           id="optionsRadios1" value="">
+                                    <input type="radio" class="form-check-input" name="card_format_type"
+                                           id="optionsRadios1" value="3">
                                 </div>
 
                                 <div class="col-11">

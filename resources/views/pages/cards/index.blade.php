@@ -14,42 +14,30 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Business Name</th>
                             <th>Card Title</th>
-                            <th>Card Message</th>
-                            <th>Card Logo</th>
+                            <th>Business Name</th>
+                            <th>Price</th>
+                            <th>Display Title</th>
+                            <th>Display Business</th>
+                            <th>Display Price</th>
+                            <th>QR code</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>53275531</td>
-                            <td>12 May 2017</td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
+                        @foreach($cards as $key => $card)
+                        <tr id="{{$key}}">
+                            <td>{{$card->title}}</td>
+                            <td>{{$card->business_name}}</td>
+                            <td>{{$card->price}} $</td>
+                            <td>{{$card->display_title == 1 ? 'Yes' : 'No'}}</td>
+                            <td>{{$card->display_business == 1 ? 'Yes' : 'No'}}</td>
+                            <td>{{$card->display_price == 1 ? 'Yes' : 'No'}}</td>
+                            <td>{{$card->is_active == 1 ? 'Active' : 'Inactive'}}</td>
                             <td><i class="mdi mdi-36px mdi-tooltip-edit"></i><i class="mdi mdi-36px mdi mdi-delete"></i></td>
                         </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>53275531</td>
-                            <td>12 May 2017</td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                            <td><i class="mdi mdi-36px mdi-tooltip-edit"></i><i class="mdi mdi-36px mdi mdi-delete"></i></td>
-
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>53275531</td>
-                            <td>12 May 2017</td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
-                            <td><i class="mdi mdi-36px mdi-tooltip-edit"></i><i class="mdi mdi-36px mdi mdi-delete"></i></td>
-
-                        </tr>
-
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

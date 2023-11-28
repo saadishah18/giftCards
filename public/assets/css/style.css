@@ -8566,6 +8566,25 @@ textarea.form-control-lg {
 .text-opacity-100 {
   --bs-text-opacity: 1; }
 
+.bg-user-color{
+    background-color: #42439C !important;
+    --bs-bg-opacity: 1 !important;
+}
+
+
+.user-button{
+    font-family: "Inter", Sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21px;
+    fill: #343F02;
+    color: #343F02;
+    background-color: #DCEF81 !important;
+    padding: 10px 25px 10px 25px;
+}
+
+
+
 .bg-primary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important; }

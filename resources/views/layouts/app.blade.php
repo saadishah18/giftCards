@@ -49,6 +49,17 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert"
+                                                       aria-label="close">×</a><b>{{ session('error') }}</b></div>
+                @endif
                 @if (isset($header))
 
                     <div class="page-header">
@@ -84,6 +95,13 @@
 <!-- Custom js for this page -->
 <script src="{{asset('assets/js/dashboard.js')}}"></script>
 <script src="{{asset('assets/js/todolist.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('.close').click(function() {
+            $(this).closest('.alert').alert('close');
+        });
+    });
+</script>
 <!-- End custom js for this page -->
 </body>
 </html>
