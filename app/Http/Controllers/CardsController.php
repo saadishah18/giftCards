@@ -47,6 +47,7 @@ class CardsController extends Controller
                 return redirect()->route('cards.index')->with('success' ,'Card created successfully');
             }
         }catch (\Exception $exception){
+            dd($exception->getMessage());
             return redirect()->back()->with('error' ,$exception->getMessage());
         }
     }

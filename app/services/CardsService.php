@@ -7,6 +7,8 @@ use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use Milon\Barcode\DNS2D;
+
 class CardsService
 {
     public function getCards($request = []){
@@ -60,7 +62,10 @@ class CardsService
         }
         $data['user_id'] = auth()->id();
         $code = $this->generate_code(8);
-        $qr_code = $this->generate_qr_image($code);
+        if (!is_dir('QRCodeImages')) {
+            mkdir('QRCodeImages', 0777, true);
+        }
+        $qr_code = DNS2D::getBarcodePNGPath($code, "QRCODE",5,5);
         $data['qr_code'] = $qr_code;
         $card = Card::create($data);
         return $card;
