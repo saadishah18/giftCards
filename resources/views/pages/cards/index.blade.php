@@ -35,6 +35,7 @@
                             <td>{{$card->display_business == 1 ? 'Yes' : 'No'}}</td>
                             <td>{{$card->display_price == 1 ? 'Yes' : 'No'}}</td>
                             <td>{{$card->is_active == 1 ? 'Active' : 'Inactive'}}</td>
+                            <td>{{$card->qr_code}}</td>
                             <td><i class="mdi mdi-36px mdi-tooltip-edit"></i><i class="mdi mdi-36px mdi mdi-delete"></i></td>
                         </tr>
                         @endforeach

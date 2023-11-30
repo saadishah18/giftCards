@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         $data = $request->all();
+        $data['role'] = 'business_owner';
         $user = User::create($data);
 
 //        event(new Registered($user));

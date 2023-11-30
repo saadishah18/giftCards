@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('display_price');
             $table->integer('card_format_type');
             $table->boolean('is_active')->default(0);
+            $table->string('qr_code')->nullable();
             $table->timestamps();
         });
     }

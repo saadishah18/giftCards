@@ -21,7 +21,7 @@ class CardsController extends Controller
     public function index()
     {
         try {
-            $cards = Card::all();
+            $cards = $this->service->getCards();
             return view('pages.cards.index',compact('cards'));
         }catch (\Exception $exception){
             dd($exception->getMessage());

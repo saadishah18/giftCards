@@ -3,18 +3,41 @@
 namespace App\services;
 
 use App\Models\Card;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\PngImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-
 class CardsService
 {
     public function getCards($request = []){
         $query = Card::query();
-        if($request['title'] != ''){
-            $query->where('');
+        if(auth()->user()->role !='admin'){
+            $query->where('user_id',auth()->id());
         }
-        $cards = $query->get();
+
+        if(!empty($request) && $request['title'] != ''){
+            $query->where('title','like','%'.$request['title']);
+        }
+        if(!empty($request) && $request['business_name'] != ''){
+            $query->where('business_name','like', '%'.$request['business_name']);
+        }
+        if(!empty($request) && $request['city'] != ''){
+            $query->wherHas('user',function ($q) use($request){
+               $q->where('city',$request['city']);
+            });
+        }
+        if(!empty($request) && $request['country'] != ''){
+            $query->wherHas('user',function ($q) use($request){
+               $q->where('country',$request['country']);
+            });
+        }
+        if(!empty($request) && $request['address'] != ''){
+            $query->wherHas('user',function ($q) use($request){
+               $q->where('address',$request['address']);
+            });
+        }
+        $cards = $query->with('user')->get();
+//        dd($cards);
         return $cards;
     }
 
@@ -36,8 +59,9 @@ class CardsService
             $data['display_price'] = 0;
         }
         $data['user_id'] = auth()->id();
-//        $code = $this->generate_code(8);
-//        $this->generate_qr_image($code);
+        $code = $this->generate_code(8);
+        $qr_code = $this->generate_qr_image($code);
+        $data['qr_code'] = $qr_code;
         $card = Card::create($data);
         return $card;
     }
@@ -49,19 +73,29 @@ class CardsService
         return implode(array_slice($code, 0, $length));
     }
 
-//    function generate_qr_image($number)
-//    {
-//        //        dd($number);
-//        $renderer = new BaconQrCode\Renderer\ImageRenderer(
-//            new BaconQrCode\Renderer\RendererStyle\RendererStyle(800),
-//            new BaconQrCode\Renderer\Image\ImagickImageBackEnd()
-//        );
-//        dd($renderer);
-//
-////        $writer = new BaconQrCode\Writer($renderer);
-//        $renderer = new ImageRenderer(400);
-//        $renderer->setImageBackEnd(new PngImageBackEnd());
-//        $writer = new Writer($renderer);
-////        $writer->writeFile(route('qr_link', $number), public_path('files/qrcodes/') . $number . '.png');
-//    }
+    function generate_qr_image($number)
+    {
+        $filename = $number . '.png';
+        $folderPath = 'uploads/qr-codes';
+
+        if (!is_dir($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
+
+        $filePath = $folderPath . '/' . $filename;
+
+        $renderer = new ImageRenderer(
+            new RendererStyle(200),
+//            new ImagickImageBackEnd()
+            new ImagickImageBackEnd()
+        );
+
+        $writer = new Writer($renderer);
+        $qrImage = $writer->writeString($number);
+
+        file_put_contents($filePath, $qrImage);
+
+        $imageUrl = asset('/' . $filePath);
+        return $imageUrl;
+    }
 }
